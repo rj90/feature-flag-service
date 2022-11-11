@@ -1,0 +1,8 @@
+language: java
+install: true
+jdk:
+  - openjdk17
+script:
+  - ./gradlew build --scan -s
+after_success:
+  - ./gradlew jacocoTestReport coveralls
