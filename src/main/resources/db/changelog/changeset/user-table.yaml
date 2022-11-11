@@ -1,0 +1,186 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-tables
+      author: Rafał Józwiak
+      changes:
+        - createTable:
+            tableName: USERS
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: NVARCHAR2(128)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: NVARCHAR2(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: FEATURE_FLAGS
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: NAME
+                  type: NVARCHAR2(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: GLOBAL
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: USER_FEATURE_FLAGS
+            columns:
+              - column:
+                  name: ID
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: USER_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_USER_FEATURE_FLAGS_USERS
+                    references: USERS
+                    nullable: false
+              - column:
+                  name: FEATURE_FLAG_ID
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: FK_USER_FEATURE_FLAGS_FEATURE_FLAGS
+                    references: FEATURE_FLAGS
+                    nullable: false
+        - addAutoIncrement:
+            tableName: USERS
+            columnName: ID
+            columnDataType: BIGINT
+        - addAutoIncrement:
+            tableName: FEATURE_FLAGS
+            columnName: ID
+            columnDataType: BIGINT
+        - addAutoIncrement:
+            tableName: USER_FEATURE_FLAGS
+            columnName: ID
+            columnDataType: BIGINT
+        - insert:
+            tableName: USERS
+            columns:
+              - column:
+                  name: USERNAME
+                  value: admin
+              - column:
+                  name: PASSWORD
+                  value: "$2y$04$hfo2R9aoSES1olnvolr1Su/7ordX9nz0jeCZEeRR2LovA4jGhtzI."
+              - column:
+                  name: ENABLED
+                  value: true
+        - insert:
+            tableName: USERS
+            columns:
+              - column:
+                  name: USERNAME
+                  value: user1
+              - column:
+                  name: PASSWORD
+                  value: "$2y$04$ht0PGamgRuUC4n0xXmd8QuWQA96yuo5HImuhQHotV3POUTu.CjEhe"
+              - column:
+                  name: ENABLED
+                  value: true
+        - insert:
+            tableName: USERS
+            columns:
+              - column:
+                  name: USERNAME
+                  value: user2
+              - column:
+                  name: PASSWORD
+                  value: "$2y$04$ZYoTdfr.V82ZYx2Q809Dv.p4tnF3KKOfHOcpsdZNAXRm/QFbDMD5C"
+              - column:
+                  name: ENABLED
+                  value: true
+        - insert:
+            tableName: USERS
+            columns:
+              - column:
+                  name: USERNAME
+                  value: user3
+              - column:
+                  name: PASSWORD
+                  value: "$2y$04$RanJQ17SGm7PDDz9KAyjbuLkfEI3gHx3gpplF8nLydTfpZNz7xGHu"
+              - column:
+                  name: ENABLED
+                  value: true
+        - insert:
+            tableName: FEATURE_FLAGS
+            columns:
+              - column:
+                  name: NAME
+                  value: ADMIN
+              - column:
+                  name: GLOBAL
+                  value: false
+        - insert:
+            tableName: FEATURE_FLAGS
+            columns:
+              - column:
+                  name: NAME
+                  value: USER
+              - column:
+                  name: GLOBAL
+                  value: false
+        - insert:
+            tableName: USER_FEATURE_FLAGS
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 1
+              - column:
+                  name: FEATURE_FLAG_ID
+                  value: 1
+        - insert:
+            tableName: USER_FEATURE_FLAGS
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 2
+              - column:
+                  name: FEATURE_FLAG_ID
+                  value: 2
+        - insert:
+            tableName: USER_FEATURE_FLAGS
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 3
+              - column:
+                  name: FEATURE_FLAG_ID
+                  value: 2
+        - insert:
+            tableName: USER_FEATURE_FLAGS
+            columns:
+              - column:
+                  name: USER_ID
+                  value: 4
+              - column:
+                  name: FEATURE_FLAG_ID
+                  value: 2
